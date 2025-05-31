@@ -7,7 +7,11 @@ import { SearchServiceBase } from '../../services/search/search.service.base';
 export class TracksFilterPipe implements PipeTransform {
     public constructor(private searchService: SearchServiceBase) {}
 
-    public transform(tracks: TrackModels, textToContain: string | undefined): TrackModels {
+    public transform(tracks: TrackModels, textToContain: string | undefined, shouldFilter: boolean = true): TrackModels {
+        if (!shouldFilter) {
+            return tracks;
+        }
+
         if (StringUtils.isNullOrWhiteSpace(textToContain)) {
             return tracks;
         }

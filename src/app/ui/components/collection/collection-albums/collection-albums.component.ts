@@ -46,6 +46,8 @@ export class CollectionAlbumsComponent implements OnInit, OnDestroy {
     public albums: AlbumModel[] = [];
     public tracks: TrackModels = new TrackModels();
 
+    public areAlbumsSelected: boolean = false;
+
     public get selectedAlbumOrder(): AlbumOrder {
         return this._selectedAlbumOrder;
     }
@@ -87,6 +89,7 @@ export class CollectionAlbumsComponent implements OnInit, OnDestroy {
     }
 
     private async fillListsAsync(): Promise<void> {
+        this.areAlbumsSelected = false;
         await this.scheduler.sleepAsync(Constants.longListLoadDelayMilliseconds);
 
         try {
@@ -116,8 +119,10 @@ export class CollectionAlbumsComponent implements OnInit, OnDestroy {
 
     private getTracksForAlbumKeys(albumKeys: string[]): void {
         if (albumKeys.length > 0) {
+            this.areAlbumsSelected = true;
             this.tracks = this.trackService.getTracksForAlbums(albumKeys);
         } else {
+            this.areAlbumsSelected = false;
             this.tracks = this.trackService.getVisibleTracks();
         }
     }
