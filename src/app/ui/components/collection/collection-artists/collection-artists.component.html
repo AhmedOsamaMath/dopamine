@@ -11,7 +11,7 @@
         <as-split-area [size]="centerPaneSize" minSize="5" maxSize="95"
             ><app-album-browser
                 class="p-3 fill"
-                [albums]="this.albums | albumsFilter: this.searchService.delayedSearchText"
+                [albums]="this.albums | albumsFilter: this.searchService.delayedSearchText : !this.areArtistsSelected"
                 [(albumsPersister)]="this.albumsPersister"
             ></app-album-browser
         ></as-split-area>
@@ -19,7 +19,7 @@
             ><div class="right-side-pane">
                 <app-track-browser
                     class="p-3 fill"
-                    [tracks]="this.tracks | tracksFilter: this.searchService.delayedSearchText"
+                    [tracks]="this.tracks | tracksFilter: this.searchService.delayedSearchText : !this.areAlbumsSelected"
                     [(tracksPersister)]="this.tracksPersister"
                 ></app-track-browser></div
         ></as-split-area>

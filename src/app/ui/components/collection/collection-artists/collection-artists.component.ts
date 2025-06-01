@@ -54,6 +54,9 @@ export class CollectionArtistsComponent implements OnInit, OnDestroy {
     public albums: AlbumModel[] = [];
     public tracks: TrackModels = new TrackModels();
 
+    public areArtistsSelected: boolean = false;
+    public areAlbumsSelected: boolean = false;
+
     public get selectedAlbumOrder(): AlbumOrder {
         return this._selectedAlbumOrder;
     }
@@ -167,17 +170,21 @@ export class CollectionArtistsComponent implements OnInit, OnDestroy {
 
     private getTracksForAlbumKeys(albumKeys: string[]): void {
         if (albumKeys.length > 0) {
+            this.areAlbumsSelected = true;
             this.tracks = this.trackService.getTracksForAlbums(albumKeys);
         } else {
+            this.areAlbumsSelected = false;
             this.tracks = this.trackService.getVisibleTracks();
         }
     }
 
     private getAlbumsForArtists(artists: ArtistModel[]): void {
         if (artists.length > 0) {
+            this.areArtistsSelected = true;
             const selectedArtistType: ArtistType = this.artistsPersister.getSelectedArtistType();
             this.albums = this.albumService.getAlbumsForArtists(artists, selectedArtistType);
         } else {
+            this.areArtistsSelected = false;
             this.albums = this.albumService.getAllAlbums();
         }
     }

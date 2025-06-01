@@ -7,7 +7,11 @@ import { SearchServiceBase } from '../../services/search/search.service.base';
 export class AlbumsFilterPipe implements PipeTransform {
     public constructor(private searchService: SearchServiceBase) {}
 
-    public transform(albums: AlbumModel[], textToContain: string | undefined): AlbumModel[] {
+    public transform(albums: AlbumModel[], textToContain: string | undefined, shouldFilter: boolean = true): AlbumModel[] {
+        if (!shouldFilter) {
+            return albums;
+        }
+
         if (StringUtils.isNullOrWhiteSpace(textToContain)) {
             return albums;
         }
